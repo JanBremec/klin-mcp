@@ -1,20 +1,37 @@
-# Klin — Visual Idea Creator (Claude Plugin & MCP Server)
+# Klin — Visual Idea Creator (Claude Plugin)
 
-**Klin** gives Claude the ability to proactively visualize ideas, UI/UX designs, diagrams, flowcharts, architecture maps, concept art, wireframes, and illustrations directly inside conversations. 
+**Klin** is an official Claude Plugin that empowers Claude to proactively visualize ideas, UI/UX designs, diagrams, flowcharts, architecture maps, concept art, wireframes, and illustrations.
 
-Users connect their Klin account once via OAuth — no manual API keys required.
-
----
-
-## Highlights
-
-- 🎨 **Proactive Visualization**: Claude doesn't wait to be asked. Whenever a visual aid communicates better than text, Claude calls `visualize_idea` automatically.
-- ⚡ **Zero-Config OAuth**: Built-in OAuth 2.1 authentication linked with Firebase & Cloudflare Workers.
-- 🧩 **Native Claude Plugin**: Built to official Claude Plugin specifications (`.claude-plugin/plugin.json`, `.mcp.json`, `SKILL.md`).
+Installing the plugin automatically provisions:
+- 🔌 **Remote MCP Server**: Connects to Klin's image generation backend (`https://klin-mcp.klin.workers.dev/mcp`).
+- 🧠 **Proactive Visual Skill**: Instructs Claude to create visual aids automatically without waiting to be asked.
 
 ---
 
-## What Claude Can Visualize
+## 🚀 Installation (One-Click Plugin Flow)
+
+### 1. Add the Klin Marketplace & Install Plugin
+
+In **Claude Code**, run:
+
+```bash
+/plugin marketplace add JanBremec/klin-mcp
+/plugin install klin@klin-marketplace
+```
+
+Or install directly from the repository:
+
+```bash
+claude plugin add github:JanBremec/klin-mcp
+```
+
+### 2. In Claude Desktop & Web
+
+Users can install the plugin via the **Plugins & Marketplace** UI by browsing or adding the marketplace `JanBremec/klin-mcp`.
+
+---
+
+## 🎨 What Claude Can Visualize
 
 - **UI & UX** — Mobile app screens, web dashboards, hero sections, button layouts
 - **Diagrams & Workflows** — Architecture diagrams, flowcharts, decision trees, infrastructure maps
@@ -24,68 +41,36 @@ Users connect their Klin account once via OAuth — no manual API keys required.
 
 ---
 
-## Plugin File Structure
+## 📦 Plugin Repository Architecture
 
 ```text
 klin-mcp/
 ├── .claude-plugin/
-│   └── plugin.json       # Official Claude Plugin Manifest
-├── .mcp.json             # Remote MCP server endpoint definition
+│   ├── plugin.json          # Plugin manifest
+│   └── marketplace.json     # Marketplace catalog definition
+├── .mcp.json                # MCP connector configuration
 ├── skills/
 │   └── klin/
-│       └── SKILL.md      # Proactive visual generation skill rules
-├── src/
-│   ├── auth-handler.ts   # OAuth 2.1 + Firebase Auth handler
-│   ├── index.ts          # Worker entrypoint
-│   └── mcp.ts            # MCP tools (visualize_idea, get_balance, get_plans, get_jobs)
-├── wrangler.toml         # Cloudflare Worker configuration
+│       └── SKILL.md         # Proactive visual generation skill rules
+├── src/                     # Cloudflare Worker source code
+├── LICENSE                  # MIT License
 └── README.md
 ```
 
 ---
 
-## MCP Tools Reference
+## 🛠️ MCP Tools Reference
 
 | Tool | Purpose |
 |---|---|
 | `visualize_idea` | Creates visual explanations, mockups, diagrams, illustrations, UI designs, and photorealistic images |
-| `get_balance` | Checks user's active plan and remaining token balance |
+| `get_balance` | Checks active plan and remaining token balance |
 | `get_plans` | Lists available subscription tiers ($7 Starter, $10 Pro, $14.99 Unlimited) |
 | `get_jobs` | Retrieves recent generation job history |
 
 ---
 
-## Installation & Setup
+## 🔗 Links & Account Management
 
-### Option 1: Install in Claude Code (CLI)
-
-Install directly from GitHub:
-```bash
-claude plugin add github:JanBremec/klin-mcp
-```
-
-Or install locally:
-```bash
-claude plugin add ./
-```
-
-### Option 2: Add to Claude Desktop or Claude.ai (Web)
-
-1. Go to **Claude → Settings → Connectors**.
-2. Click **Add custom MCP**.
-3. Enter the connector URL:  
-   `https://klin-mcp.klin.workers.dev/mcp`
-4. Complete the Firebase sign-in once.
-
----
-
-## Deploying Your Own Instance
-
-```bash
-npm install
-npx wrangler secret put KLIN_SERVICE_KEY
-npx wrangler secret put COOKIE_SECRET
-npx wrangler deploy
-```
-
-Website & Subscription Management: [https://klin-skill.netlify.app](https://klin-skill.netlify.app)
+- Website & Subscriptions: [https://klin-skill.netlify.app](https://klin-skill.netlify.app)
+- License: [MIT](LICENSE)

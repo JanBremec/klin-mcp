@@ -6,7 +6,7 @@
   "plugins": [
     {
       "name": "klin",
-      "source": ".",
+      "source": "./",
       "description": "Proactively visualize ideas, UI/UX designs, diagrams, flowcharts, concept art, wireframes, and illustrations using Klin MCP"
     }
   ]

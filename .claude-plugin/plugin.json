@@ -3,13 +3,10 @@
   "version": "1.0.0",
   "description": "Proactively visualize ideas, UI/UX designs, diagrams, flowcharts, concept art, wireframes, and illustrations using Klin",
   "author": {
-    "name": "Jan Bremec",
-    "url": "https://github.com/JanBremec"
+    "name": "Jan Bremec"
   },
-  "repository": "https://github.com/JanBremec/klin-mcp",
-  "license": "MIT",
-  "mcpServers": "../.mcp.json",
+  "mcpServers": "./.mcp.json",
   "skills": [
-    "../skills/klin"
+    "./skills/"
   ]
 }
