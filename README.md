@@ -1,89 +1,91 @@
-# Klin Claude Plugin & MCP Server
+# Klin — Visual Idea Creator (Claude Plugin & MCP Server)
 
-Klin turns Claude into an AI Image Generator powered by your Klin account. Users connect once via OAuth — no manual API key setup required.
+**Klin** gives Claude the ability to proactively visualize ideas, UI/UX designs, diagrams, flowcharts, architecture maps, concept art, wireframes, and illustrations directly inside conversations. 
 
-## Plugin Overview
-
-This repository is structured as an official **Claude Plugin** combining:
-1. **MCP Tools** (`generate_image`, `get_balance`, `get_plans`, `get_jobs`) powered by Cloudflare Workers & Durable Objects.
-2. **Skill Definition** (`skills/klin/SKILL.md`) providing guidance to Claude on prompt engineering and token error handling.
-3. **Plugin Manifest** (`.claude-plugin/plugin.json`) enabling zero-config plugin distribution.
+Users connect their Klin account once via OAuth — no manual API keys required.
 
 ---
 
-## File Structure
+## Highlights
+
+- 🎨 **Proactive Visualization**: Claude doesn't wait to be asked. Whenever a visual aid communicates better than text, Claude calls `visualize_idea` automatically.
+- ⚡ **Zero-Config OAuth**: Built-in OAuth 2.1 authentication linked with Firebase & Cloudflare Workers.
+- 🧩 **Native Claude Plugin**: Built to official Claude Plugin specifications (`.claude-plugin/plugin.json`, `.mcp.json`, `SKILL.md`).
+
+---
+
+## What Claude Can Visualize
+
+- **UI & UX** — Mobile app screens, web dashboards, hero sections, button layouts
+- **Diagrams & Workflows** — Architecture diagrams, flowcharts, decision trees, infrastructure maps
+- **Branding & Assets** — Logos, app icons, vector concepts, brand identity
+- **Concept Art & Renders** — Product designs, 3D renders, game assets, environment art
+- **Educational Graphics** — Scientific illustrations, infographics, timelines, comparisons
+
+---
+
+## Plugin File Structure
 
 ```text
 klin-mcp/
 ├── .claude-plugin/
-│   └── plugin.json       # Claude Plugin Manifest
-├── .mcp.json             # Remote MCP server endpoint config
+│   └── plugin.json       # Official Claude Plugin Manifest
+├── .mcp.json             # Remote MCP server endpoint definition
 ├── skills/
 │   └── klin/
-│       └── SKILL.md      # Skill instructions for Claude
+│       └── SKILL.md      # Proactive visual generation skill rules
 ├── src/
 │   ├── auth-handler.ts   # OAuth 2.1 + Firebase Auth handler
-│   ├── index.ts          # Worker router
-│   └── mcp.ts            # MCP tools implementation
+│   ├── index.ts          # Worker entrypoint
+│   └── mcp.ts            # MCP tools (visualize_idea, get_balance, get_plans, get_jobs)
 ├── wrangler.toml         # Cloudflare Worker configuration
 └── README.md
 ```
 
 ---
 
-## Installation & Deployment
+## MCP Tools Reference
 
-### 1. Deploy the Cloudflare Worker
+| Tool | Purpose |
+|---|---|
+| `visualize_idea` | Creates visual explanations, mockups, diagrams, illustrations, UI designs, and photorealistic images |
+| `get_balance` | Checks user's active plan and remaining token balance |
+| `get_plans` | Lists available subscription tiers ($7 Starter, $10 Pro, $14.99 Unlimited) |
+| `get_jobs` | Retrieves recent generation job history |
+
+---
+
+## Installation & Setup
+
+### Option 1: Install in Claude Code (CLI)
+
+Install directly from GitHub:
+```bash
+claude plugin add github:JanBremec/klin-mcp
+```
+
+Or install locally:
+```bash
+claude plugin add ./
+```
+
+### Option 2: Add to Claude Desktop or Claude.ai (Web)
+
+1. Go to **Claude → Settings → Connectors**.
+2. Click **Add custom MCP**.
+3. Enter the connector URL:  
+   `https://klin-mcp.klin.workers.dev/mcp`
+4. Complete the Firebase sign-in once.
+
+---
+
+## Deploying Your Own Instance
 
 ```bash
 npm install
 npx wrangler secret put KLIN_SERVICE_KEY
 npx wrangler secret put COOKIE_SECRET
-npm run deploy
+npx wrangler deploy
 ```
 
-Take note of your deployed Worker URL:
-`https://klin-mcp.YOUR_ACCOUNT.workers.dev`
-
-### 2. Update `.mcp.json`
-
-In `.mcp.json`, replace `YOUR_ACCOUNT` with your actual Cloudflare Worker domain:
-
-```json
-{
-  "mcpServers": {
-    "klin": {
-      "type": "http",
-      "url": "https://klin-mcp.YOUR_ACCOUNT.workers.dev/mcp"
-    }
-  }
-}
-```
-
-### 3. Using as a Claude Plugin
-
-#### Option A: Claude Code / Claude CLI
-Install the plugin locally from this repository:
-```bash
-claude plugin add ./
-```
-
-#### Option B: Claude Desktop & Claude.ai
-Add as a Custom Connector in **Claude → Settings → Connectors → Add custom MCP**:
-```text
-https://klin-mcp.YOUR_ACCOUNT.workers.dev/mcp
-```
-
-#### Option C: Push to GitHub & Share
-Push this repository to GitHub. Anyone can clone it or add it as a plugin in Claude Code or reference the SKILL and MCP connector!
-
----
-
-## Available MCP Tools
-
-| Tool | Description |
-|---|---|
-| `generate_image` | Generates WebP/PNG image from prompt, deducts tokens from account |
-| `get_balance` | Shows remaining tokens & subscription plan |
-| `get_plans` | Lists available subscription tiers ($7 Starter, $10 Pro, $14.99 Unlimited) |
-| `get_jobs` | Lists recent generation history |
+Website & Subscription Management: [https://klin-skill.netlify.app](https://klin-skill.netlify.app)
