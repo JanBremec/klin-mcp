@@ -1,0 +1,13 @@
+{
+  "name": "klin-visual-idea-creator",
+  "version": "1.0.0",
+  "description": "Proactively visualize ideas, UI/UX designs, diagrams, flowcharts, concept art, wireframes, and illustrations in Claude.",
+  "author": {
+    "name": "Klin Team"
+  },
+  "homepage": "https://klin-skill.netlify.app",
+  "skills": [
+    "skills/klin"
+  ],
+  "mcpServers": ".mcp.json"
+}

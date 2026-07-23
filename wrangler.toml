@@ -1,0 +1,37 @@
+name = "klin-mcp"
+main = "src/index.ts"
+compatibility_date = "2025-06-01"
+compatibility_flags = ["nodejs_compat"]
+
+# KV namespace for OAuth token storage
+# After running: wrangler kv namespace create "OAUTH_KV"
+# paste the returned id below
+[[kv_namespaces]]
+binding = "OAUTH_KV"
+id = "1062d982d1ec4f4299174c624f3c341a"
+
+# Durable Object binding for the KlinMCP agent.
+# McpAgent (from the "agents" package) is a DurableObject subclass and looks
+# up its own namespace via env.MCP_OBJECT by default (agents/dist/mcp/index.js).
+# Without this binding + migration, every /mcp request 500s with "Invalid binding".
+[[durable_objects.bindings]]
+name = "MCP_OBJECT"
+class_name = "KlinMCP"
+
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["KlinMCP"]
+
+[vars]
+RENDER_BACKEND_URL = "https://klin-backend-w9xh.onrender.com"
+FIREBASE_PROJECT_ID = "klin0web"
+# Set this after enabling r2.dev public access (step 3 below):
+R2_PUBLIC_URL = "https://pub-9d042d687b0d4cf693d0d102f756a43b.r2.dev"
+
+[[r2_buckets]]
+bucket_name = "klin-images"
+binding = "R2"
+
+# Secrets (set via: wrangler secret put SECRET_NAME)
+# KLIN_SERVICE_KEY   — a long random string you make up (also add to Render)
+# COOKIE_SECRET      — another long random string for signing cookies

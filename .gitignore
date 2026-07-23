@@ -1,0 +1,13 @@
+# Ignore secret keys file created during deployment
+keys
+
+# Wrangler and build outputs
+.wrangler/
+dist/
+node_modules/
+
+# OS / IDE metadata
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
