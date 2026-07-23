@@ -549,6 +549,50 @@ async function handleRequest(
     }
   }
 
+  // ── GET /.well-known/oauth-protected-resource (RFC 9723) ──────────────
+  if (url.pathname === "/.well-known/oauth-protected-resource" && request.method === "GET") {
+    const origin = url.origin;
+    return new Response(
+      JSON.stringify({
+        resource: `${origin}/mcp`,
+        authorization_servers: [origin],
+        scopes_supported: ["generate", "balance", "jobs"],
+        bearer_methods_supported: ["header"],
+      }),
+      {
+        status: 200,
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+        },
+      }
+    );
+  }
+
+  // ── GET /.well-known/oauth-authorization-server (RFC 8414) ────────────
+  if (url.pathname === "/.well-known/oauth-authorization-server" && request.method === "GET") {
+    const origin = url.origin;
+    return new Response(
+      JSON.stringify({
+        issuer: origin,
+        authorization_endpoint: `${origin}/authorize`,
+        token_endpoint: `${origin}/token`,
+        registration_endpoint: `${origin}/register`,
+        scopes_supported: ["generate", "balance", "jobs"],
+        response_types_supported: ["code"],
+        grant_types_supported: ["authorization_code", "refresh_token"],
+        token_endpoint_auth_methods_supported: ["none"],
+      }),
+      {
+        status: 200,
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+        },
+      }
+    );
+  }
+
   // ── Fallback ──────────────────────────────────────────────────────────
   return new Response("Klin MCP Server", {
     status: 200,
