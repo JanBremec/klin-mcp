@@ -1,0 +1,13 @@
+{
+  "name": "klin-marketplace",
+  "owner": {
+    "name": "Jan Bremec"
+  },
+  "plugins": [
+    {
+      "name": "klin",
+      "source": ".",
+      "description": "Proactively visualize ideas, UI/UX designs, diagrams, flowcharts, concept art, wireframes, and illustrations using Klin MCP"
+    }
+  ]
+}

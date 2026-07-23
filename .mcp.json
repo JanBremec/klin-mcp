@@ -2,8 +2,7 @@
   "mcpServers": {
     "klin": {
       "type": "http",
-      "url": "https://klin-mcp.klin.workers.dev/mcp",
-      "description": "Klin Visual Idea Creator — Proactively visualize UI/UX, diagrams, concepts, and graphics"
+      "url": "https://klin-mcp.klin.workers.dev/mcp"
     }
   }
 }

@@ -1,13 +1,15 @@
 {
-  "name": "klin-visual-idea-creator",
+  "name": "klin",
   "version": "1.0.0",
-  "description": "Proactively visualize ideas, UI/UX designs, diagrams, flowcharts, concept art, wireframes, and illustrations in Claude.",
+  "description": "Proactively visualize ideas, UI/UX designs, diagrams, flowcharts, concept art, wireframes, and illustrations using Klin",
   "author": {
-    "name": "Klin Team"
+    "name": "Jan Bremec",
+    "url": "https://github.com/JanBremec"
   },
-  "homepage": "https://klin-skill.netlify.app",
+  "repository": "https://github.com/JanBremec/klin-mcp",
+  "license": "MIT",
+  "mcpServers": "../.mcp.json",
   "skills": [
-    "skills/klin"
-  ],
-  "mcpServers": ".mcp.json"
+    "../skills/klin"
+  ]
 }
